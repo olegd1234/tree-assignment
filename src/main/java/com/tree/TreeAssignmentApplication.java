@@ -39,16 +39,20 @@ public class TreeAssignmentApplication {
         for (Node<HwFile> root : roots) {
             traverse(
                     root,
-                    "",
                     hwFile -> hwFile.getCreatedBy().equals("user@kramerav.com"),
                     (path, node) -> System.out.println(path));
         }
 
     }
+    private static void traverse(Node<HwFile> root, Predicate<HwFile> criteria, TraverseNodeMethod traverseNodeMethod) {
+        traverse(root, "", criteria, traverseNodeMethod);
+    }
 
     private static void traverse(Node<HwFile> nodeOnPath, String onPath, Predicate<HwFile> criteria, TraverseNodeMethod traverseNodeMethod) {
 
-        String nodePath = onPath + "/" + nodeOnPath.getData().getName();
+        String nodePath = onPath.equals("") ?
+                nodeOnPath.getData().getName() :
+                onPath + "/" + nodeOnPath.getData().getName();
         if (criteria.test(nodeOnPath.getData())) {
             traverseNodeMethod.execute(nodePath, nodeOnPath);
         }
