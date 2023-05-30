@@ -48,7 +48,9 @@ public class TreeAssignmentApplication {
 
     private static void traverse(Node<HwFile> nodeOnPath, String onPath, Predicate<HwFile> criteria, TraverseNodeMethod traverseNodeMethod) {
 
-        String nodePath = onPath + "/" + nodeOnPath.getData().getName();
+        String nodePath = onPath.equals("") ?
+                nodeOnPath.getData().getName() :
+                onPath + "/" + nodeOnPath.getData().getName();
         if (criteria.test(nodeOnPath.getData())) {
             traverseNodeMethod.execute(nodePath, nodeOnPath);
         }
